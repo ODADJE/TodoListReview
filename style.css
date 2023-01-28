@@ -26,7 +26,7 @@ header{
     margin-bottom: 40px;
 }
 
-.new-task-div form{
+.new-task-div .form {
     width: 100%;
     height: 60px;
     text-align: center;
@@ -40,7 +40,7 @@ header{
     border-radius: 8px;
 }
 button{
-    width: 5%;
+    width: 6%;
     height: 50px;
     background-color: #1E6F9F;
     border: #1E6F9F solid 2px;
@@ -110,10 +110,12 @@ main{
     justify-content: center;
     align-items: center;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 .task-1 p {
     margin: 5px 20px;
     width: 95%;
+    text-align: justify;
 }
 .task-1 img{
     float: right;
@@ -129,6 +131,6 @@ main{
     width: 100%;
 }
 .checkbox{
-    margin-left: 4px;
+    margin-left: 10px;
     width: 2%;
 }
