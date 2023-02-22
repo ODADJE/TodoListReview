@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ToDo</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header id="First-header">
+      <img src="assets/images/Logo.png" alt="Logo du site" />
+    </header>
+    <main>
+      <div class="new-task-div">
+        <form class="form" action="/" method="POST">
+          <input
+            type="text"
+            name="task"
+            class="new-task"
+            placeholder="Add your new task"
+          />
+          <button>
+            <p>Creer</p>
+            <!-- <img src="assets/images/plus.png" alt="" /> -->
+          </button>
+        </form>
+      </div>
+      <div class="tasks">
+        <div class="head">
+          <p class="total-task">
+            Total de taches <span class="tot"><%= tasks.length %></span>
+          </p>
+          <p class="task-executed">
+            Taches executees
+            <span class="tot"
+              ><span class="executed">0</span> de
+              <span><%= tasks.length %></span></span
+            >
+          </p>
+        </div>
+        <div class="task-list">
+          <% if(tasks.length != 0) {%><% tasks.forEach(task => { %>
+          <div class="task-1">
+            <input type="checkbox" class="checked" onchange="checkedTask()" />
+            <p class="myTask"><%= task.task %></p>
+            <a class="delete" data-doc="<%= task._id %>"
+              ><img src="assets/images/trash.png" alt="" onclick="remove()"
+            /></a>
+          </div>
+          <% }) %><% } else { %>
+          <p>Veuillez ajouter des taches...</p>
+          <% } %>
+        </div>
+      </div>
+    </main>
+    <script>
+      const remove = () => {
+        const trashcan = document.querySelectorAll("a.delete");
+       for (let i = 0; i < trashcan.length; i++) {
+        trashcan[i].addEventListener("click", () => {
+        const endpoint = `/${trashcan[i].dataset.doc}`;
+
+          fetch(endpoint, {
+            method: "DELETE",
+          })
+            .then((response) => response.json())
+            .then((data) => (window.location.href = data.redirect))
+            .catch((err) => console.log(err));
+        });
+        
+       }
+      };
+
+      let tab = [];
+    const checkedTask = () => {
+      const myCheck = document.querySelectorAll("input.checked");
+      for (let i = 0; i < myCheck.length; i++) {
+        if (myCheck[i].checked === true) {
+          const taskChecked = document.querySelectorAll(".myTask");
+          taskChecked[i].style.textDecoration = "line-through";
+          if(!tab.includes(i)){
+            tab.push(i);
+          }
+        } 
+       else if(myCheck[i].checked === false){
+          const taskChecked = document.querySelectorAll(".myTask");
+          taskChecked[i].style.textDecoration = "none";
+          if(tab.includes(i)){
+            let index = tab.indexOf(i);
+            tab.splice(index);
+          }
+        }
+      }
+      document.querySelector('.executed').textContent= tab.length;
+    };
+    </script>
+  </body>
+</html>
